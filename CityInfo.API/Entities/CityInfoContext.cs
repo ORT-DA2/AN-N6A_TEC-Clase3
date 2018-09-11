@@ -18,6 +18,7 @@ namespace CityInfo.API.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // localdb comes with VS2017, chage it for you own sql instance by replacing the conn string
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CityInfo;Trusted_Connection=True;");
         }
 
