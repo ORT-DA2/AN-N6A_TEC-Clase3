@@ -30,7 +30,7 @@ Luego generamos una migration (snapshot del código que vimos)
 No podemos generar dos migrations con el mismo nombre, por lo tanto **migrationName** debe ser distinto cada vez que generemos una.
 
 ```
-	 dotnet ef update database
+	 dotnet ef database update
 ```
 
 Ahora si, tenemos una base. Anteriormente con migrations, lo que obtenemos son las instrucciones para generar el esquema de la base.
