@@ -39,3 +39,30 @@ Ahora si, tenemos una base. Anteriormente con migrations, lo que obtenemos son l
 select * from __EFMigrationsHistory
 ```
 EF utiliza esta tabla al momento de ejecutar el update database. Necesita saber cuales migrations no se han aplicado aún a la base existente.
+
+### TDD con Moq
+
+[MOQ quick start](https://github.com/Moq/moq4/wiki/Quickstart)
+
+En el proyecto de test
+```
+dotnet add package Moq
+```
+
+```
+dotnet watch test
+``` 
+
+[Unit test Microsoft Doc](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest?view=aspnetcore-2.1)
+
+
+Microsoft.AspNetCore.Mvc.Abstractions 
+```
+dotnet add package Microsoft.AspNetCore.Mvc.Abstractions
+```
+
+Microsoft.AspNetCore.Mvc.Core
+```
+dotnet add package Microsoft.AspNetCore.Mvc.Core
+```
+
