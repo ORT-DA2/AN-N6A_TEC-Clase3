@@ -1,4 +1,5 @@
 ﻿using CityInfo.API.Entities;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,7 +50,9 @@ namespace CityInfo.API
             // services.AddScoped()   created one per request
             // services.AddSingleton() created first time requested or to provide a specific instance
 
-           // services.AddDbContext<CityInfoContext>(o => o.UseSqlServer("Server=.;Database=CityInfoDb;Trusted_Connection=True"));
+            services.AddScoped<ICityService, CitySevice>();
+
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CityInfo;Trusted_Connection=True;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

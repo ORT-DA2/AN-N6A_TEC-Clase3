@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "62dba66a-0f6d-162f-3c91-cfc996d1fef3",
+		"name": "AspNetCore2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get a city",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/cities/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get a point of interest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/cities/1/pointofinterest/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointofinterest",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get city points of interest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/cities/1/pointsofinterest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/cities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/cityimage/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cityimage",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create invalid point of interest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"InvalidProperty\": 15,\n\t\"Description\": \"Is to loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5000/api/cities/1/pointsofinterest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "storage image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file"
+						},
+						{
+							"key": "FileName",
+							"value": "Postal2",
+							"type": "text"
+						},
+						{
+							"key": "CityId",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/cityImage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cityImage"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

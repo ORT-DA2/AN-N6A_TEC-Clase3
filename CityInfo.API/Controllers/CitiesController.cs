@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
-using CityInfo.API.Entities;
-using CityInfo.API.Models;
+﻿using CityInfo.API.Models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.API.Controllers
@@ -9,14 +7,17 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]  // [Route("api/[controller]")]
     public class CitiesController : Controller
     {
+        private readonly ICityService cityService;
+        public CitiesController(ICityService service)
+        {
+            this.cityService = service;
+        }
+
+
         [HttpGet()]
         public IActionResult GetCities([FromQuery] string name)
         {
-            var cities = CityDataStore.Current.Cities;
-
-            return Ok(!string.IsNullOrEmpty(name) ? 
-                cities.Where(city => city.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)) : 
-                cities);
+            return Ok(this.cityService.GetCities(name));
         }
 
         //[HttpGet("{id}")]
@@ -30,7 +31,7 @@ namespace CityInfo.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetCity(int id)
         {
-            var cityMacth = CityDataStore.Current.Cities.FirstOrDefault(city => city.Id == id);
+            var cityMacth = this.cityService.GetCity(id);
 
             if (cityMacth == null)
             {
@@ -43,12 +44,9 @@ namespace CityInfo.API.Controllers
 
         public void Post(CityDto dto)
         {
-            using (var db = new CityInfoContext())
-            {
-                db.Cities.Add(new City {Name = dto.Name, Description = dto.Description});
+            // this.context.Cities.Add(new City { Name = dto.Name, Description = dto.Description });
 
-                db.SaveChanges();
-            }
+            // this.context.SaveChanges();
         }
 
     }

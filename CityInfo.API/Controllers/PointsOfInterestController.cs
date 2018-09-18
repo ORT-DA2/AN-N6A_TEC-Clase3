@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CityInfo.API.Entities;
 using CityInfo.API.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class PointsOfInterestController : Controller
     {
-        private ILogger<PointsOfInterestController> logger;
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+        private readonly CityInfoContext context;
+        private readonly ILogger<PointsOfInterestController> logger;
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, CityInfoContext context)
         {
             this.logger = logger;
+            this.context = context;
         }
 
         [HttpGet("{cityId}/pointsofinterest")]
@@ -24,7 +27,7 @@ namespace CityInfo.API.Controllers
                 var valueFromConfig = Startup.Configuration["owner:name"];
                 this.logger.LogInformation($"I can read configuration value -- {valueFromConfig} --.");
 
-                var city = CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+                var city = this.context.Cities.FirstOrDefault(c => c.Id == cityId);
 
                 if (city == null)
                 {
@@ -44,7 +47,7 @@ namespace CityInfo.API.Controllers
         [Route("{cityID}/pointofinterest/{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int Id)
         {
-            var city = CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = this.context.Cities.FirstOrDefault(c => c.Id == cityId);
 
             if (city == null)
             {
@@ -115,7 +118,7 @@ namespace CityInfo.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var city = CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = this.context.Cities.FirstOrDefault(c => c.Id == cityId);
 
             if (city == null)
             {
@@ -146,7 +149,7 @@ namespace CityInfo.API.Controllers
                 return BadRequest();
             }
 
-            var city = CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = this.context.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
@@ -186,7 +189,7 @@ namespace CityInfo.API.Controllers
         [HttpDelete("{cityId}/pointsofinterest/{id}")]
         public IActionResult DeletePointOfInterest(int cityId, int id)
         {
-            var city = CityDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = this.context.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();

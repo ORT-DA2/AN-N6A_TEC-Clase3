@@ -6,20 +6,20 @@ namespace CityInfo.API.Entities
 {
     public class CityInfoContext : DbContext
     {
-        /*public CityInfoContext()
+        public CityInfoContext(DbContextOptions<CityInfoContext> options) : base(options)
         {
             Database.Migrate();
-        }*/
+        }
         public DbSet<City> Cities { get; set; }
 
         public DbSet<PointOfInterest> PointsOfInterest { get; set; }
 
         public DbSet<CityImage> CityImages { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CityInfo;Trusted_Connection=True;");
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,17 +32,17 @@ namespace CityInfo.API.Entities
             //Data Seeding
             //https://docs.microsoft.com/en-us/ef/core/modeling/data-seeding
             modelBuilder.Entity<City>().HasData(new City()
-                {
-                    Id = 1,
-                    Name = "New York City",
-                    Description = "Great park in the middle",
-                    PointsOfInterest = new List<PointOfInterest>()
+            {
+                Id = 1,
+                Name = "New York City",
+                Description = "Great park in the middle",
+                PointsOfInterest = new List<PointOfInterest>()
                     {
                         new PointOfInterest(){Id = 10,Name = "Point 10", Description = "Welcome to point 10"},
                         new PointOfInterest(){Id = 11,Name = "Point 11", Description = "Welcome to point 11"},
                         new PointOfInterest(){Id = 12,Name = "Point 12", Description = "Welcome to point 12"}
                     }
-                },
+            },
                 new City()
                 {
                     Id = 2,

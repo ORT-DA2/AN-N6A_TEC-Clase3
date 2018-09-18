@@ -51,12 +51,12 @@ dotnet add package Moq
 
 ```
 dotnet watch test
-``` 
+```
 
 [Unit test Microsoft Doc](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest?view=aspnetcore-2.1)
 
 
-Microsoft.AspNetCore.Mvc.Abstractions 
+Microsoft.AspNetCore.Mvc.Abstractions
 ```
 dotnet add package Microsoft.AspNetCore.Mvc.Abstractions
 ```
@@ -66,3 +66,38 @@ Microsoft.AspNetCore.Mvc.Core
 dotnet add package Microsoft.AspNetCore.Mvc.Core
 ```
 
+### Aclaración calse de hoy
+
+cometi un error al mostrar como ejemplo, intentar hacer un mock de una clase que hereda de dbContext, como es el caso de CityInfoContext. Son tantas las dependencias que en inviable para moq generar un mock por eso existe el fake EF Core in memory.
+
+[Testing with InMemory](https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/in-memory)
+
+Aclarado ese punto, subo en master los unit test que estuvimos haciendo con ICityService,
+
+Recodar:
+
+* mock.Setup -> Podemos definir el comportamiento necesario para generar el caso de prueba, inlcuso que dispare una exception.
+
+* mockBehavior ->
+por defecto Loose, nos permite obtener sin configuración que va intentar devolvre default cuando es invocado.
+Strict -> nos exige que todo metodo y/o property que va ser invocada por la unidad bajo test, debe tener un comportamiento definido. En caso contrario el unit test falla.
+
+
+
+```
+            var mock = new Mock<ICityService>(MockBehavior.Strict);
+            mock.Setup(m => m.GetCities(It.IsAny<string>()))
+            .Returns(new List<City> { new City(), new City() });
+
+            var sut = new CitiesController(mock.Object);
+            var inputValue = "randomValue since it expect any string value, even null";
+
+            var response = sut.GetCities(inputValue);
+
+            mock.Verify(m => m.GetCities(inputValue), Times.Once);
+
+            var result = response as OkObjectResult;
+            var model = result.Value as List<City>;
+            Assert.AreEqual(200, result.StatusCode);
+            Assert.AreEqual(2, model.Count);
+```
